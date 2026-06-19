@@ -1,6 +1,0 @@
-{
-  "name": "Alarm",
-  "description": "A simple alarm clock application.",
-  "requestFramePermissions": [],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
-}
