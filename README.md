@@ -1,60 +1,70 @@
 # Unbreakable Alarm
 
-A modern, highly resilient Android alarm application designed to guarantee that you wake up. Instead of offering a simple dismiss or snooze button, the Unbreakable Alarm requires you to complete challenging "missions" to prove that you are fully awake before the alarm will turn off.
+An Android alarm app for people who turn off their alarm in their sleep and don't remember doing it. Instead of a dismiss button, you have to complete a short "mission" — solve some math, retype a phrase, shake the phone, walk around, repeat a color sequence — before it'll actually stop ringing.
 
-## 🚀 Features
+Built with Kotlin and Jetpack Compose.
 
-- **Mission-Based Dismissal**: Choose from multiple missions that challenge your cognitive and physical awareness:
-  - **Math Mission**: Solve randomly generated math problems based on difficulty level.
-  - **Typing Mission**: Retype motivational phrases accurately to stop the alarm.
-  - **Shake Mission**: Shake your device vigorously a specific number of times.
-  - **Step Mission**: Walk a certain number of steps using device motion sensors.
-  - **Color Tiles Mission**: A memory game to repeat a sequence of highlighted color tiles.
-- **Progressive Difficulty**: Tailor the difficulty of missions (Easy, Medium, Hard, etc.) and specify the number of repetitions.
-- **Haptic Feedback**: Meaningful, tactile responses during missions and navigation. Long and short vibration cues help guide the user interactions even when half-awake.
-- **Modern UI/UX**: Clean, engaging, and minimal views built specifically to reduce morning friction while enforcing wakefulness.
+## Missions
 
-## 🛠️ Architecture & Tech Stack
+- **Math** — solve a randomly generated problem; difficulty controls how nasty the numbers get
+- **Typing** — retype a motivational phrase exactly, no shortcuts
+- **Shake** — shake the device a set number of times
+- **Steps** — walk a set number of steps, tracked via the device's motion sensor
+- **Color tiles** — repeat back a sequence of flashing tiles, Simon-says style
 
-This project is built using modern Android development principles and follows standard architectural practices for scalability and maintainability.
+Each mission has its own difficulty and rep count, so you can tune how rough you want your mornings to be.
 
-- **Language**: [Kotlin](https://kotlinlang.org/) (100%)
-- **UI Framework**: [Jetpack Compose](https://developer.android.com/jetpack/compose) for a fully declarative, responsive, and fluid user interface.
-- **Local Persistence**: **Room Database** for robust, offline local storage of alarm configurations and mission preferences.
-- **Architecture**: **MVVM (Model-View-ViewModel)** providing clear separation between data logic, state management, and UI rendering.
-  - `AlarmViewModel` manages state propagation and data retrieval.
-  - Stateflows are used for reactive rendering across screens.
-- **Concurrency**: **Kotlin Coroutines** and **Flows** handle asynchronous operations like fetching items from the database.
-- **Scheduling**: Android `AlarmManager` handles precise alarm scheduling, ensuring alarms trigger reliably even if the app is killed or the device restarts. Includes boot receivers to re-register alarms upon device restart.
-- **Sensors**: Hardware sensor integration (`SensorManager`) for step counting and accelerometer-based shake detection.
-- **Audio & Haptics**: Uses `Vibrator` API and `HapticFeedbackType` to provide rich tactile feedback and `MediaPlayer` / `RingtoneManager` for ringtone playback.
-- **Background Execution**: Features a Foreground `Service` (`AlarmService`) combined with a full-screen Intent Activity (`AlarmRingingActivity`) for proper lock-screen waking and uninterrupted alarm playback.
+## Other features
 
-## 🎨 Design
+- Vibration cues on key interactions, since you're probably not reading the screen closely at 6am
+- Full-screen alarm activity that wakes the device over the lock screen
+- Alarms survive a reboot — there's a boot receiver that re-registers everything
+- Material 3 UI with dynamic color support
 
-The visual design is structured around **Material Design 3 (M3)** principles:
+## Built with
 
-- **Edge-to-Edge Compatibility**: Accommodates deeply integrated system UI and transparent navigation bars for immersive viewing.
-- **Dynamic Theming**: Utilizes Compose's Material 3 color schemes combined with thoughtfully paired typography constraints.
-- **Component Specifics**: 
-  - Generous hit targets (minimum 48dp) across mission interactive elements.
-  - Visual depth is managed seamlessly via Surface elements, elevation, and card hierarchies.
-- **Accessibility & UX**: Includes descriptive labels (`contentDescription`) for essential UI interactions and relies on contrasting states (failed vs. success feedback) in memory/color tile games.
+- Kotlin
+- [Jetpack Compose](https://developer.android.com/jetpack/compose) for the UI
+- Room for storing alarms and mission settings
+- Kotlin Coroutines / Flow for async work and reactive state
+- `AlarmManager` for scheduling
+- `SensorManager` for the shake and step missions
+- `Vibrator`, `MediaPlayer`, and `RingtoneManager` for the alarm itself
 
-## 📦 Building the App
+Architecture is MVVM — a ViewModel exposes StateFlows that the Compose screens collect, Room handles persistence, and a foreground Service paired with a full-screen Activity handles the actual ringing so it keeps going even if the app gets killed.
 
-This project uses Gradle with Kotlin DSL plugins. 
+## Getting started
 
-1. **Prerequisites**: Ensure you have Android Studio appropriately configured.
-2. **Build**: You can assemble the debug APK using Gradle:
+1. Clone the repo
+2. Open it in Android Studio and let Gradle sync
+3. Run on a device or emulator, or build the debug APK directly:
+
    ```bash
    ./gradlew :app:assembleDebug
    ```
-3. **Tests**: (If applicable) Execute standard tests:
-   ```bash
-   ./gradlew :app:testDebugUnitTest
-   ```
 
-## 📜 License
+Run unit tests with:
 
-This project is open-source. Feel free to use it, modify it, or contribute to it!
+```bash
+./gradlew :app:testDebugUnitTest
+```
+
+## Roadmap / known issues
+
+- [ ] More mission types
+- [ ] Custom ringtone picker
+- [ ] Configurable snooze limits
+- [ ] Step mission can be unreliable on devices without a hardware step counter
+
+## Contributing
+
+Bug reports and PRs are welcome, especially if you've got an idea for a mission that would actually get you out of bed.
+
+1. Fork the repo
+2. Create a branch (`git checkout -b feature/your-feature`)
+3. Commit your changes
+4. Push and open a PR
+
+## License
+
+Open source — use it, fork it, take it apart. No LICENSE file yet; open an issue if you need one sorted before I get to it.
