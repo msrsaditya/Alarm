@@ -6,7 +6,7 @@ plugins {
   alias(libs.plugins.secrets)
 }
 android {
-  namespace = "com.example"
+  namespace = "com.unbreakable.alarm"
   compileSdk { version = release(36) { minorApiLevel = 1 } }
   defaultConfig {
     applicationId = "com.unbreakable.alarm"

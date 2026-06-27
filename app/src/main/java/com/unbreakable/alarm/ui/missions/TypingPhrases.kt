@@ -1,0 +1,178 @@
+package com.unbreakable.alarm.ui.missions
+val SUPER_EASY_PHRASES = listOf(
+    "Wake up", "Good morning", "Rise and shine", "Hello world", "Time to go",
+    "Let us begin", "New day", "Fresh start", "Get up now", "Stand up",
+    "Open eyes", "Look out", "See the sun", "Morning light", "Bright day",
+    "Happy time", "Smile now", "Stretch out", "Take a breath", "Feeling good",
+    "Move around", "Start moving", "Here we go", "Let us do it", "Be happy",
+    "Ready now", "Go ahead", "Keep going", "Keep it up", "Good job",
+    "Well done", "Stay awake", "Stay alert", "Look up", "Jump high",
+    "Walk fast", "Run quick", "Breathe deep", "Drink water", "Eat food",
+    "Wash face", "Brush teeth", "Comb hair", "Wear clothes", "Put shoes",
+    "Tie laces", "Grab bag", "Take keys", "Lock door", "Walk out",
+    "Go outside", "Fresh air", "Blue sky", "Green grass", "Sing bird",
+    "Hear that", "Listen well", "Speak clear", "Say hello", "Wave hand",
+    "Give smile", "Be kind", "Help out", "Do good", "Work hard",
+    "Play fair", "Have fun", "Enjoy life", "Love it", "Like this",
+    "Read book", "Write word", "Draw line", "Paint art", "Sing song",
+    "Dance slow", "Clap hands", "Tap feet", "Nod head", "Blink eyes",
+    "Look left", "Look right", "Look ahead", "Look down", "Turn around",
+    "Spin wide", "Stand still", "Sit down", "Rest now", "Take break",
+    "Drink juice", "Eat apple", "Chew well", "Swallow down", "Feel full",
+    "Feel nice", "Feel strong", "Feel brave", "Be bold", "Be brave"
+)
+val EASY_PHRASES = listOf(
+    "Time to get up and start the day.", "A beautiful morning is waiting.", "Let's be productive today.", "Make today a very great day.", "The sun is shining bright outside.",
+    "Get up and make your bed.", "Brush your teeth and wash your face.", "Eat a healthy breakfast today.", "Drink a glass of fresh water.", "Stretch your arms and your legs.",
+    "Take a deep breath and relax.", "Smile in the mirror right now.", "Say something nice to yourself.", "Plan your tasks for the day.", "Check your schedule and notes.",
+    "Pack your bag and get ready.", "Put on your favorite clothes.", "Tie your shoes tight and go.", "Step outside and feel the breeze.", "Listen to the birds singing sweetly.",
+    "Walk with confidence and joy.", "Greet your neighbors with a smile.", "Help someone if they need it.", "Be kind to everyone you meet.", "Stay positive and stay very strong.",
+    "Keep your head up and look.", "Focus on your goals right now.", "Work hard and play very hard.", "Learn something new every day.", "Read a good book for a while.",
+    "Write down your thoughts and ideas.", "Listen to your favorite music.", "Dance like nobody is watching you.", "Sing along to a happy song.", "Enjoy the little things in life.",
+    "Take a walk in the green park.", "Appreciate the beauty around you.", "Spend time with your family.", "Call a friend and say hello.", "Share a laugh with a buddy.",
+    "Eat a delicious and healthy lunch.", "Drink plenty of water today.", "Take short breaks to rest.", "Stretch your back and shoulders.", "Keep your desk clean and neat.",
+    "Finish your work on time today.", "Be proud of your great progress.", "Celebrate your small daily wins.", "Reflect on your busy day.", "Write in your personal journal.",
+    "Plan for a better tomorrow.", "Watch a funny movie or show.", "Play a fun game with friends.", "Cook a nice dinner for yourself.", "Enjoy a quiet evening at home.",
+    "Read a bedtime story to kids.", "Take a warm and relaxing bath.", "Put on your comfortable pajamas.", "Turn off the bright lights.", "Get ready for a good sleep.",
+    "Close your eyes and breathe deep.", "Dream about wonderful new things.", "Wake up feeling very refreshed.", "Start the cycle all over again.", "Live your life to the fullest.",
+    "Be happy and be very healthy.", "Stay hydrated and stay active.", "Keep learning and keep growing.", "Never give up on your dreams.", "Believe in yourself every day.",
+    "Look out the window right now.", "Always try your best in life.", "Take a moment just for you.", "Remember to smile and stand tall.", "Make someone happy right now.",
+    "Bake a very sweet cake today.", "Draw a picture of a tree.", "Write a nice letter to someone.", "Listen to the sound of rain.", "Watch the clouds in the sky.",
+    "Count to ten and take breath.", "Let go of your hidden worries.", "Try a new food for dinner.", "Find joy in the simple things.", "Clean your room and organize it.",
+    "Tidy up your bright workspace.", "Have a great day at school.", "Show your friends that you care.", "Give someone a big warm hug.", "Say thank you very much often.",
+    "Learn a new word this morning.", "Make a wish on a star.", "Take a step back and look.", "Everything is going to be fine.", "You are doing a great job.",
+    "This is a wonderful new day.", "Find your inner peace and calm.", "Stay cool and stay very calm.", "Enjoy the sweet melody of life.", "Hold on to your great hopes."
+)
+val MEDIUM_PHRASES = listOf(
+    "Success is not final, failure is not fatal.", "Believe you can and you're halfway there.", "The only way to do great work is to love what you do.",
+    "Do not let yesterday take up too much of today.", "You learn more from failure than from success.", "It is not whether you get knocked down, it is whether you get up.",
+    "If you are going through hell, keep going.", "I can't change the direction of the wind, but I can adjust my sails.", "Believe in yourself and all that you are.",
+    "To see what is right and not do it is a lack of courage.", "Keep your face always toward the sunshine, and shadows will fall behind you.", "The best way to predict the future is to invent it.",
+    "It is never too late to be what you might have been.", "You miss one hundred percent of the shots you do not take.", "I attribute my success to this: I never gave or took any excuse.",
+    "The most difficult thing is the decision to act.", "Definiteness of purpose is the starting point of all achievement.", "We become what we think about most of the time.",
+    "Life is what happens to you while you are busy making other plans.", "Logic will get you from A to B. Imagination will take you everywhere.", "A person who never made a mistake never tried anything new.",
+    "Try not to become a man of success, but rather try to become a man of value.", "The mind is everything. What you think you become.", "The journey of a thousand miles begins with one step.",
+    "What you get by achieving your goals is not as important as what you become.", "Your time is limited, so don't waste it living someone else's life.", "Strive not to be a success, but rather to be of value.",
+    "Two roads diverged in a wood, and I took the one less traveled by.", "The beautiful thing about learning is that nobody can take it away from you.", "Whether you think you can or think you can't, you're right.",
+    "I have not failed. I have just found ten thousand ways that will not work.", "We can easily forgive a child who is afraid of the dark.", "The only limit to our realization of tomorrow will be our doubts of today.",
+    "Do what you can, with what you have, where you are.", "Everything you've ever wanted is on the other side of fear.", "Nothing is impossible, the word itself says, 'I'm possible!'",
+    "I've learned that people will forget what you said, people will forget what you did.", "Whether you think you can or you think you can't, you are right.", "Perfection is not attainable, but if we chase perfection we can catch excellence.",
+    "Life is 10% what happens to me and 90% of how I react to it.", "If you look at what you have in life, you'll always have more.", "Remember no one can make you feel inferior without your consent.",
+    "I can't change the direction of the wind, but I can adjust my sails.", "Believe you can and you're halfway there.", "To handle yourself, use your head; to handle others, use your heart.",
+    "Too many of us are not living our dreams because we are living our fears.", "Do or do not. There is no try.", "Whatever the mind of man can conceive and believe, it can achieve.",
+    "Twenty years from now you will be more disappointed by the things that you didn't do.", "The most common way people give up their power is by thinking they don't have any.",
+    "Great works are performed not by strength but by perseverance.", "A goal is a dream with a deadline.", "Action is the foundational key to all success.",
+    "I attribute my success to this: I never gave or took any excuse.", "Only I can change my life. No one can do it for me.", "You just can't beat the person who never gives up.",
+    "You cannot cross the sea merely by standing and staring at the water.", "Well done is better than well said.", "Quality is not an act, it is a habit.",
+    "To succeed in life, you need two things: ignorance and confidence.", "Never interrupt your enemy when he is making a mistake.", "Failure is the condiment that gives success its flavor.",
+    "A year from now you may wish you had started today.", "By failing to prepare, you are preparing to fail.", "Energy and persistence conquer all things.",
+    "I have found that luck is quite predictable.", "Change your thoughts and you change your world.", "No bird soars too high if he soars with his own wings.",
+    "Every strike brings me closer to the next home run.", "When you reach the end of your rope, tie a knot in it and hang on.", "The only true wisdom is in knowing you know nothing.",
+    "You are never too old to set another goal or to dream a new dream.", "Keep your eyes on the stars, and your feet on the ground.", "A smile is the universal welcome.",
+    "Simplicity is the ultimate sophistication.", "To be the best, you must be able to handle the worst.", "What we achieve inwardly will change outer reality.",
+    "Don't compromise yourself. You are all you've got.", "Doubt kills more dreams than failure ever will.", "We may encounter many defeats but we must not be defeated.",
+    "If opportunity doesn't knock, build a door.", "Work hard in silence, let your success be your noise.", "It does not matter how slowly you go as long as you do not stop.",
+    "Do what you feel in your heart to be right, for you'll be criticized anyway.", "Success is a lousy teacher. It seduces smart people into thinking they can't lose.", "It takes courage to grow up and become who you really are.",
+    "Our greatest glory is not in never falling, but in rising every time we fall.", "Happiness depends upon ourselves.", "Be the change that you wish to see in the world.",
+    "Yesterday is history, tomorrow is a mystery, today is a gift of God.", "Without continuous growth and progress, such words as improvement, achievement, and success have no meaning.", "Opportunity is missed by most people because it is dressed in overalls and looks like work.",
+    "Your life does not get better by chance, it gets better by change.", "Motivation is what gets you started. Habit is what keeps you going.", "Success is getting what you want; happiness is wanting what you get.",
+    "Everything has beauty, but not everyone sees it.", "Only those who will risk going too far can possibly find out how far one can go.", "A champion is defined not by their wins but by how they can recover when they fall."
+)
+val HARD_PHRASES = listOf(
+    "Early to bed and early to rise makes a man healthy, wealthy, and wise.", "Life is what happens when you're busy making other plans.",
+    "The future belongs to those who believe in the beauty of their dreams.", "In the end, it's not the years in your life that count, but the life in your years.",
+    "Many of life's failures are people who did not realize how close they were to success.", "If you want to live a happy life, tie it to a goal, not to people or things.",
+    "Never let the fear of striking out keep you from playing the game.", "Money and success don't change people; they merely amplify what is already there.",
+    "Your time is limited, so don't waste it living someone else's life. Don't be trapped by dogma.", "Not how long, but how well you have lived is the main thing.",
+    "If life were predictable it would cease to be life, and be without flavor.", "The whole secret of a successful life is to find out what is one's destiny to do, and then do it.",
+    "In order to write about life first you must live it.", "The big lesson in life, baby, is never be scared of anyone or anything.",
+    "Curiosity about life in all of its aspects, I think, is still the secret of great creative people.", "Life is not a problem to be solved, but a reality to be experienced.",
+    "The unexamined life is not worth living.", "Turn your wounds into wisdom.", "The way I see it, if you want the rainbow, you gotta put up with the rain.",
+    "Do all the good you can, for all the people you can, in all the ways you can, as long as you can.", "Don't settle for what life gives you; make life better and build something.",
+    "Everything negative - pressure, challenges - is all an opportunity for me to rise.", "I like criticism. It makes you strong.", "You never really learn much from hearing yourself speak.",
+    "Live as if you were to die tomorrow. Learn as if you were to live forever.", "Health is the greatest gift, contentment the greatest wealth, faithfulness the best relationship.",
+    "Experience is a hard teacher because she gives the test first, the lesson afterwards.", "Those who realize their folly are not true fools.", "There is no royal road to anything. One thing at a time, all things in succession.",
+    "An investment in knowledge always pays the best interest.", "It is better to remain silent at the risk of being thought a fool, than to talk and remove all doubt of it.", "All our dreams can come true, if we have the courage to pursue them.",
+    "Good friends, good books, and a sleepy conscience: this is the ideal life.", "Life is 10 percent what happens to you and 90 percent how you respond to it.", "Keep your face always toward the sunshine, and shadows will fall behind you.",
+    "We convince by our presence.", "The greatest glory in living lies not in never falling, but in rising every time we fall.", "If you look at what you have in life, you'll always have more. If you look at what you don't have in life, you'll never have enough.",
+    "When one door of happiness closes, another opens; but often we look so long at the closed door that we do not see the one which has been opened for us.", "Happiness is not by chance, but by choice.", "You must be the change you wish to see in the world.",
+    "The best way to find yourself is to lose yourself in the service of others.", "Everything you can imagine is real.", "Sometimes the questions are complicated and the answers are simple.",
+    "Don't cry because it's over, smile because it happened.", "If you tell the truth, you don't have to remember anything.", "A friend is someone who knows all about you and still loves you.",
+    "Always forgive your enemies; nothing annoys them so much.", "Live as if you were to die tomorrow. Learn as if you were to live forever.", "Darkness cannot drive out darkness: only light can do that. Hate cannot drive out hate: only love can do that.",
+    "I have not failed. I've just found 10,000 ways that won't work.", "Knowing yourself is the beginning of all wisdom.", "If you can't explain it to a six year old, you don't understand it yourself.",
+    "The only true wisdom is in knowing you know nothing.", "We accept the love we think we deserve.", "The greatest discovery of all time is that a person can change his future by merely changing his attitude.",
+    "Success is not final, failure is not fatal: it is the courage to continue that counts.", "Hardships often prepare ordinary people for an extraordinary destiny.", "Success usually comes to those who are too busy to be looking for it.",
+    "If you really look closely, most overnight successes took a long time.", "I find that the harder I work, the more luck I seem to have.", "The only place where success comes before work is in the dictionary.",
+    "There are no secrets to success. It is the result of preparation, hard work, and learning from failure.", "Character cannot be developed in ease and quiet. Only through experience of trial and suffering can the soul be strengthened.", "Whether you think you can or you think you can't, you're right.",
+    "I missed more than 9000 shots in my career.", "I've failed over and over and over again in my life.", "I learned that courage was not the absence of fear, but the triumph over it.", "The brave man is not he who does not feel afraid, but he who conquers that fear.",
+    "Only put off until tomorrow what you are willing to die having left undone.", "People who are crazy enough to think they can change the world, are the ones who do.", "We may encounter many defeats but we must not be defeated.", "Knowing is not enough; we must apply.",
+    "The secret of getting ahead is getting started.", "We generate fears while we sit. We overcome them by action.", "You are never too old to set another goal or to dream a new dream.", "We must believe that we are gifted for something, and that this thing, at whatever cost, must be attained.",
+    "Security is mostly a superstition. Life is either a daring adventure or nothing.", "To accomplish great things, we must not only act, but also dream, not only plan, but also believe.", "Keep your eyes on the stars, and your feet on the ground.", "What you get by achieving your goals is not as important as what you become by achieving your goals.",
+    "Don't watch the clock; do what it does. Keep going.", "A creative man is motivated by the desire to achieve, not by the desire to beat others.", "Expect problems and eat them for breakfast.", "The way to get started is to quit talking and begin doing.",
+    "If you can dream it, you can do it.", "Always do your best. What you plant now, you will harvest later.", "Either you run the day, or the day runs you.", "I attribute my success to this: I never gave or took any excuse."
+)
+object PhraseManager {
+    private const val PREFS_NAME = "TypingPhrases"
+    private const val KEY_PHRASES = "phrases"
+    private const val KEY_INDEX = "current_index"
+
+    fun getSavedPhrases(context: android.content.Context): List<String> {
+        val prefs = context.getSharedPreferences(PREFS_NAME, android.content.Context.MODE_PRIVATE)
+        return prefs.getStringSet(KEY_PHRASES, emptySet())?.toList() ?: emptyList()
+    }
+
+    fun savePhrases(context: android.content.Context, phrases: Set<String>) {
+        val prefs = context.getSharedPreferences(PREFS_NAME, android.content.Context.MODE_PRIVATE)
+        prefs.edit().putStringSet(KEY_PHRASES, phrases).apply()
+    }
+
+    fun getAndAdvanceNextPhrase(context: android.content.Context): String? {
+        val prefs = context.getSharedPreferences(PREFS_NAME, android.content.Context.MODE_PRIVATE)
+        val savedPhrases = prefs.getStringSet(KEY_PHRASES, emptySet())?.toList() ?: emptyList()
+        if (savedPhrases.isNotEmpty()) {
+            val index = prefs.getInt(KEY_INDEX, 0)
+            if (index < savedPhrases.size) {
+                val phraseToUse = savedPhrases[index]
+                prefs.edit().putInt(KEY_INDEX, index + 1).apply()
+                return phraseToUse
+            } else {
+                prefs.edit().putInt(KEY_INDEX, 0).apply()
+                return savedPhrases[0]
+            }
+        }
+        return null
+    }
+}
+
+val SUPER_HARD_PHRASES = listOf(
+    "In three words I can sum up everything I've learned about life: it goes on.", "To be yourself in a world that is constantly trying to make you something else is the greatest accomplishment.",
+    "You know you're in love when you can't fall asleep because reality is finally better than your dreams.", "The paradox of education is precisely this - that as one begins to become conscious one begins to examine the society in which he is being educated.",
+    "I've learned that people will forget what you said, people will forget what you did, but people will never forget how you made them feel.", "Success is stumbling from failure to failure with no loss of enthusiasm.",
+    "Be kind, for everyone you meet is fighting a harder battle.", "There are only two ways to live your life. One is as though nothing is a miracle. The other is as though everything is a miracle.",
+    "If you want to know what a man's like, take a good look at how he treats his inferiors, not his equals.", "I am enough of an artist to draw freely upon my imagination. Imagination is more important than knowledge.",
+    "A room without books is like a body without a soul.", "To bring about change, you must not be afraid to take the first step. We will fail when we fail to try.",
+    "Happiness is not something ready made. It comes from your own actions.", "The weak can never forgive. Forgiveness is the attribute of the strong.",
+    "It is our choices, Harry, that show what we truly are, far more than our abilities.", "Success usually comes to those who are too busy to be looking for it.",
+    "If you are not willing to risk the usual, you will have to settle for the ordinary.", "I find that the harder I work, the more luck I seem to have.",
+    "Opportunities don't happen. You create them.", "Don't be afraid to give up the good to go for the great.", "I realized that if I was going to achieve anything in life I had to be aggressive.",
+    "There are no secrets to success. It is the result of preparation, hard work, and learning from failure.", "The successful warrior is the average man, with laser-like focus.",
+    "Things work out best for those who make the best of how things work out.", "To live is the rarest thing in the world. Most people exist, that is all.",
+    "A man who dares to waste one hour of time has not discovered the value of life.", "Whenever you find yourself on the side of the majority, it is time to pause and reflect.", "Life shrinks or expands in proportion to one's courage.",
+    "Nothing in life is to be feared, it is only to be understood. Now is the time to understand more, so that we may fear less.", "Let us always meet each other with smile, for the smile is the beginning of love.", "The greatest religion is to be true to your own nature. Have faith in yourselves.",
+    "Do not mind anything that anyone tells you about anyone else. Judge everyone and everything for yourself.", "The only thing worse than being blind is having sight but no vision.", "Peace cannot be kept by force; it can only be achieved by understanding.",
+    "A person who is quietly confident makes the best leader.", "There is no charm equal to tenderness of heart.", "If I am not for myself, who will be for me? If I am not for others, what am I?", "You can't blame gravity for falling in love.",
+    "The world breaks everyone, and afterward, some are strong at the broken places.", "He who has a why to live can bear almost any how.", "Every man dies. Not every man really lives.", "Sometimes you have to let go of the picture of what you thought life would be.",
+    "You have within you right now, everything you need to deal with whatever the world can throw at you.", "The most beautiful things in the world cannot be seen or even touched - they must be felt with the heart.", "What counts in life is not the mere fact that we have lived.",
+    "The purpose of our lives is to be happy.", "Out of difficulties grow miracles.", "Life is thickly sown with thorns, and I know no other remedy than to pass quickly through them.", "Life consists not in holding good cards but in playing those you hold well.",
+    "God gave us the gift of life; it is up to us to give ourselves the gift of living well.", "There are three constants in life... change, choice and principles.", "Our lives begin to end the day we become silent about things that matter.",
+    "He who is not courageous enough to take risks will accomplish nothing in life.", "There is no passion to be found playing small - in settling for a life that is less than the one you are capable of living.", "The only disability in life is a bad attitude.",
+    "Only a life lived for others is a life worthwhile.", "Man is the only creature who refuses to be what he is.", "To succeed in life, you need three things: a wishbone, a backbone and a funny bone.", "I have found that if you love life, life will love you back.",
+    "You get out of life what you put into it.", "Don't take life too seriously. You'll never get out of it alive.", "The older you get, the more fragile you understand life to be.", "May you live all the days of your life.",
+    "A life spent making mistakes is not only more honorable, but more useful than a life spent doing nothing.", "Life is what we make it, always has been, always will be.", "Go confidently in the direction of your dreams! Live the life you've imagined.",
+    "If you love life, don't waste time, for time is what life is made up of.", "Life shrinks or expands in proportion to one's courage.", "I slept and dreamt that life was joy. I awoke and saw that life was service.", "Good friends, good books, and a sleepy conscience.",
+    "Life is short, and it is here to be lived.", "If you want a happy life, tie it to a goal, not to people or objects.", "There is only one happiness in this life, to love and be loved.", "Don't search for the meaning of life. Simply be present for the people you love.",
+    "It is not how much we have, but how much we enjoy, that makes happiness.", "Be happy for this moment. This moment is your life.", "We cannot cure the world of sorrows, but we can choose to live in joy.", "Joy does not simply happen to us. We have to choose joy and keep choosing it every day.",
+    "If you want to be happy, set a goal that commands your thoughts, liberates your energy, and inspires your hopes.", "Happiness radiates like the fragrance from a flower.", "Find ecstasy in life; the mere sense of living is joy enough.", "A happy life consists not in the absence, but in the mastery of hardships.",
+    "When you love what you have, you have everything you need.", "Do not anticipate trouble, or worry about what may never happen. Keep in the sunlight.", "The secret of happiness is to find a congenial monotony.", "Enjoy the little things, for one day you may look back and realize they were the big things.",
+    "Because you are alive, everything is possible.", "Live, travel, adventure, bless, and don't be sorry.", "The core of man's spirit comes from new experiences.", "Keep looking up... that's the secret of life.", "Love the life you live. Live the life you love."
+)
