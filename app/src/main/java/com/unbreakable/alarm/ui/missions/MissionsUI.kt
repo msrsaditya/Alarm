@@ -43,7 +43,7 @@ fun MissionsSection(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text("Wake-up mission", fontSize = 20.sp, color = MaterialTheme.colorScheme.onBackground)
+            Text("Wake-Up Mission", fontSize = 20.sp, color = MaterialTheme.colorScheme.onBackground)
             Text("${missions.size}/5", fontSize = 16.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
         Spacer(modifier = Modifier.height(16.dp))

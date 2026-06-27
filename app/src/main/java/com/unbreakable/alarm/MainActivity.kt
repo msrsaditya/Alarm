@@ -49,7 +49,7 @@ class MainActivity : ComponentActivity() {
                         Surface(modifier = Modifier.fillMaxSize()) {
                             val navController = rememberNavController()
                             NavHost(
-                                navController = navController, 
+                                navController = navController,
                                 startDestination = "alarms",
                                 enterTransition = {
                                     slideIntoContainer(AnimatedContentTransitionScope.SlideDirection.Left, animationSpec = tween(500)) + fadeIn(animationSpec = tween(500))

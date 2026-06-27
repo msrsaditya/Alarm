@@ -199,8 +199,8 @@ fun PermissionItem(title: String, description: String, isGranted: Boolean, isReq
             Column(modifier = Modifier.weight(1f).padding(end = 16.dp)) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(
-                        text = title, 
-                        fontWeight = FontWeight.Bold, 
+                        text = title,
+                        fontWeight = FontWeight.Bold,
                         color = MaterialTheme.colorScheme.onSurface,
                         modifier = Modifier.weight(1f, fill = false)
                     )
@@ -213,8 +213,8 @@ fun PermissionItem(title: String, description: String, isGranted: Boolean, isReq
                 }
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
-                    text = description, 
-                    style = MaterialTheme.typography.bodySmall, 
+                    text = description,
+                    style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }

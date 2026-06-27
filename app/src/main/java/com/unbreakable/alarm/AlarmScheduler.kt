@@ -64,7 +64,7 @@ class AlarmScheduler(private val context: Context) {
         while (true) {
             val cDay = next.get(Calendar.DAY_OF_WEEK)
             val dbDay = if (cDay == Calendar.SUNDAY) 7 else cDay - 1
-            if (alarm.daysOfWeek.contains(dbDay) && next.after(now)) {
+            if (alarm.daysOfWeek.contains(dbDay) && next.timeInMillis > now.timeInMillis) {
                 break
             }
             next.add(Calendar.DAY_OF_YEAR, 1)

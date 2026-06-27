@@ -244,18 +244,18 @@ fun MissionConfigEditor(
                     Text("$repetitions", fontSize = 32.sp, fontWeight = FontWeight.Bold, modifier = Modifier.padding(horizontal = 24.dp))
                     IconButton(onClick = { repetitions++ }) { Text("+", fontSize = 24.sp) }
                     Spacer(modifier = Modifier.width(16.dp))
-                    Text("times", fontSize = 18.sp)
+                    Text("Times", fontSize = 18.sp)
                 }
             }
             if (initialConfig.type == MissionType.TYPING) {
                 Column(modifier = Modifier.fillMaxWidth()) {
-                    Text("Custom phrases (optional)", fontSize = 16.sp, fontWeight = FontWeight.Medium)
+                    Text("Custom Phrases (Optional)", fontSize = 16.sp, fontWeight = FontWeight.Medium)
                     Spacer(modifier = Modifier.height(8.dp))
                     Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
                         OutlinedTextField(
                             value = phraseInput,
                             onValueChange = { phraseInput = it },
-                            placeholder = { Text("Add custom phrase...") },
+                            placeholder = { Text("Add Custom Phrase...") },
                             modifier = Modifier.weight(1f)
                         )
                         Spacer(modifier = Modifier.width(8.dp))
@@ -275,8 +275,8 @@ fun MissionConfigEditor(
                             customPhrases.forEach { phrase ->
                                 Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
                                     Text(phrase, modifier = Modifier.weight(1f))
-                                    IconButton(onClick = { 
-                                        customPhrases = customPhrases.filter { it != phrase } 
+                                    IconButton(onClick = {
+                                        customPhrases = customPhrases.filter { it != phrase }
                                         PhraseManager.savePhrases(context, customPhrases.toSet())
                                     }) {
                                         Icon(Icons.Default.Close, contentDescription = "Remove")
@@ -294,7 +294,7 @@ fun MissionConfigEditor(
                     Text("$targetCount", fontSize = 32.sp, fontWeight = FontWeight.Bold, modifier = Modifier.padding(horizontal = 24.dp))
                     IconButton(onClick = { targetCount += 5 }) { Text("+", fontSize = 24.sp) }
                     Spacer(modifier = Modifier.width(16.dp))
-                    Text(if (initialConfig.type == MissionType.STEP) "Steps" else "times", fontSize = 18.sp)
+                    Text(if (initialConfig.type == MissionType.STEP) "Steps" else "Times", fontSize = 18.sp)
                 }
             }
         }

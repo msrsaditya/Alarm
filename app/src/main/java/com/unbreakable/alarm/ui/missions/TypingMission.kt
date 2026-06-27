@@ -60,8 +60,8 @@ fun TypingMission(difficulty: Difficulty?, customPhrases: List<String>?, onCompl
         }
         OutlinedTextField(
             value = userInput,
-            onValueChange = { 
-                userInput = it 
+            onValueChange = {
+                userInput = it
                 if (userInput == phrase) {
                     status = 1
                 } else if (!phrase.startsWith(userInput)) {

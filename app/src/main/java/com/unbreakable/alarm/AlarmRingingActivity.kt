@@ -24,7 +24,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import com.unbreakable.alarm.ui.theme.MyApplicationTheme
 class AlarmRingingActivity : ComponentActivity() {
-    private var isRinging = true
+    @Volatile private var isRinging = true
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         onBackPressedDispatcher.addCallback(this, object : androidx.activity.OnBackPressedCallback(true) {
@@ -135,7 +135,7 @@ class AlarmRingingActivity : ComponentActivity() {
         finishAndRemoveTask()
     }
     override fun onKeyDown(keyCode: Int, event: android.view.KeyEvent?): Boolean {
-        if (keyCode == android.view.KeyEvent.KEYCODE_VOLUME_DOWN || 
+        if (keyCode == android.view.KeyEvent.KEYCODE_VOLUME_DOWN ||
             keyCode == android.view.KeyEvent.KEYCODE_VOLUME_UP ||
             keyCode == android.view.KeyEvent.KEYCODE_VOLUME_MUTE) {
             val audioManager = getSystemService(Context.AUDIO_SERVICE) as android.media.AudioManager
@@ -149,7 +149,7 @@ class AlarmRingingActivity : ComponentActivity() {
         return super.onKeyDown(keyCode, event)
     }
     override fun onKeyUp(keyCode: Int, event: android.view.KeyEvent?): Boolean {
-        if (keyCode == android.view.KeyEvent.KEYCODE_VOLUME_DOWN || 
+        if (keyCode == android.view.KeyEvent.KEYCODE_VOLUME_DOWN ||
             keyCode == android.view.KeyEvent.KEYCODE_VOLUME_UP ||
             keyCode == android.view.KeyEvent.KEYCODE_VOLUME_MUTE) {
             return true

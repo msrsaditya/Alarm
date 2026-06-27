@@ -28,6 +28,8 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
@@ -55,20 +57,20 @@ fun UppercaseAmPmTimePicker(
                 return object : android.content.res.Resources(baseRes.assets, baseRes.displayMetrics, baseRes.configuration) {
                     override fun getString(id: Int): String {
                         val str = super.getString(id)
-                        if (str.equals("am", ignoreCase = true) || str.equals("a.m.", ignoreCase = true)) return "A.M."
-                        if (str.equals("pm", ignoreCase = true) || str.equals("p.m.", ignoreCase = true)) return "P.M."
+                        if (str.equals("am", ignoreCase = true) || str.equals("a.m.", ignoreCase = true)) return "AM"
+                        if (str.equals("pm", ignoreCase = true) || str.equals("p.m.", ignoreCase = true)) return "PM"
                         return str
                     }
                     override fun getString(id: Int, vararg formatArgs: Any?): String {
                         val str = super.getString(id, *formatArgs)
-                        if (str.equals("am", ignoreCase = true) || str.equals("a.m.", ignoreCase = true)) return "A.M."
-                        if (str.equals("pm", ignoreCase = true) || str.equals("p.m.", ignoreCase = true)) return "P.M."
+                        if (str.equals("am", ignoreCase = true) || str.equals("a.m.", ignoreCase = true)) return "AM"
+                        if (str.equals("pm", ignoreCase = true) || str.equals("p.m.", ignoreCase = true)) return "PM"
                         return str
                     }
                     override fun getText(id: Int): CharSequence {
                         val str = super.getText(id)
-                        if (str.toString().equals("am", ignoreCase = true) || str.toString().equals("a.m.", ignoreCase = true)) return "A.M."
-                        if (str.toString().equals("pm", ignoreCase = true) || str.toString().equals("p.m.", ignoreCase = true)) return "P.M."
+                        if (str.toString().equals("am", ignoreCase = true) || str.toString().equals("a.m.", ignoreCase = true)) return "AM"
+                        if (str.toString().equals("pm", ignoreCase = true) || str.toString().equals("p.m.", ignoreCase = true)) return "PM"
                         return str
                     }
                 }
@@ -113,7 +115,7 @@ fun AlarmListScreen(viewModel: AlarmViewModel, onNavigateToAdd: () -> Unit, onNa
                     .padding(padding),
                 contentAlignment = Alignment.Center
             ) {
-                Text("No alarms set.", color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text("No Alarms Set.", color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
         } else {
             LazyColumn(
@@ -208,7 +210,7 @@ fun AlarmItem(alarm: Alarm, onToggle: (Boolean) -> Unit, onDelete: () -> Unit, o
             }
         )
     }
-    val amPm = if (alarm.hour >= 12) "P.M." else "A.M."
+    val amPm = if (alarm.hour >= 12) "PM" else "AM"
     val displayHour = if (alarm.hour == 0) 12 else if (alarm.hour > 12) alarm.hour - 12 else alarm.hour
     val displayTimeFormatted = String.format(java.util.Locale.getDefault(), "%02d:%02d", displayHour, alarm.minute)
     val targetActiveBackgroundColor = if (alarm.id % 2 == 0) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.6f)
@@ -254,9 +256,9 @@ fun AlarmItem(alarm: Alarm, onToggle: (Boolean) -> Unit, onDelete: () -> Unit, o
                 }
                 Switch(
                     checked = alarm.isActive,
-                    onCheckedChange = { 
+                    onCheckedChange = {
                         haptic.performHapticFeedback(HapticFeedbackType.LongPress)
-                        onToggle(it) 
+                        onToggle(it)
                     },
                     colors = SwitchDefaults.colors(
                         checkedThumbColor = MaterialTheme.colorScheme.onPrimary,
@@ -269,27 +271,73 @@ fun AlarmItem(alarm: Alarm, onToggle: (Boolean) -> Unit, onDelete: () -> Unit, o
                 )
             }
             Spacer(modifier = Modifier.height(8.dp))
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
+            Column(
+                modifier = Modifier.fillMaxWidth()
             ) {
-                Column {
-                    Text(
-                        text = if (alarm.label.isNotBlank()) alarm.label else "Alarm",
-                        color = MaterialTheme.colorScheme.onSurface,
-                        fontSize = 18.sp,
-                        fontWeight = FontWeight.SemiBold
-                    )
+                Text(
+                    text = if (alarm.label.isNotBlank()) alarm.label else "Alarm",
+                    color = MaterialTheme.colorScheme.onSurface,
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.SemiBold
+                )
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
                     Text(
                         text = trigger.let { calculateTimeLeft(alarm.hour, alarm.minute, alarm.daysOfWeek, alarm.isActive) },
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                         fontSize = 14.sp,
-                        fontWeight = FontWeight.Medium,
-                        modifier = Modifier.padding(top = 2.dp)
+                        fontWeight = FontWeight.Medium
                     )
+                    Row(modifier = Modifier.offset(x = 12.dp)) {
+                        val context = androidx.compose.ui.platform.LocalContext.current
+                        IconButton(onClick = {
+                            haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+                            val alarmLabel = if (alarm.label.isNotBlank()) alarm.label else "Alarm"
+                            val serviceIntent = android.content.Intent(context, com.unbreakable.alarm.AlarmService::class.java).apply {
+                                putExtra("ALARM_ID", alarm.id)
+                                putExtra("ALARM_LABEL", alarmLabel)
+                            }
+                            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                                context.startForegroundService(serviceIntent)
+                            } else {
+                                context.startService(serviceIntent)
+                            }
+                            val activityIntent = android.content.Intent(context, com.unbreakable.alarm.AlarmRingingActivity::class.java).apply {
+                                putExtra("ALARM_ID", alarm.id)
+                                putExtra("ALARM_LABEL", alarmLabel)
+                                putExtra("IS_PREVIEW", true)
+                                addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK or android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP or android.content.Intent.FLAG_ACTIVITY_SINGLE_TOP)
+                            }
+                            context.startActivity(activityIntent)
+                        }) {
+                            Icon(
+                                Icons.Filled.PlayArrow,
+                                contentDescription = "Preview Alarm",
+                                tint = MaterialTheme.colorScheme.primary
+                            )
+                        }
+                        IconButton(onClick = {
+                            haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+                            showDeleteConfirm = true
+                        }) {
+                            Icon(
+                                Icons.Filled.Delete,
+                                contentDescription = "Delete Alarm",
+                                tint = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        }
+                    }
+                }
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
                     if (alarm.missions.isNotEmpty()) {
-                        Row(modifier = Modifier.padding(top = 8.dp), horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+                        Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
                             alarm.missions.forEach { mission ->
                                 val icon = when(mission.type) {
                                     com.unbreakable.alarm.data.MissionType.COLOR_TILES -> Icons.Default.GridView
@@ -306,54 +354,31 @@ fun AlarmItem(alarm: Alarm, onToggle: (Boolean) -> Unit, onDelete: () -> Unit, o
                                     contentAlignment = Alignment.Center
                                 ) {
                                     Icon(
-                                        imageVector = icon, 
-                                        contentDescription = null, 
-                                        tint = MaterialTheme.colorScheme.primary, 
+                                        imageVector = icon,
+                                        contentDescription = null,
+                                        tint = MaterialTheme.colorScheme.primary,
                                         modifier = Modifier.size(14.dp)
                                     )
                                 }
                             }
                         }
+                    } else {
+                        Spacer(modifier = Modifier.width(1.dp))
                     }
-                }
-                Row {
-                    val context = androidx.compose.ui.platform.LocalContext.current
-                    IconButton(onClick = {
-                        haptic.performHapticFeedback(HapticFeedbackType.LongPress)
-                        val alarmLabel = if (alarm.label.isNotBlank()) alarm.label else "Alarm"
-                        val serviceIntent = android.content.Intent(context, com.unbreakable.alarm.AlarmService::class.java).apply {
-                            putExtra("ALARM_ID", alarm.id)
-                            putExtra("ALARM_LABEL", alarmLabel)
+                    val daysText = when {
+                        alarm.daysOfWeek.isEmpty() -> "Once"
+                        alarm.daysOfWeek.size == 7 -> "Everyday"
+                        else -> {
+                            val weekDaysMap = mapOf(1 to "M", 2 to "T", 3 to "W", 4 to "T", 5 to "F", 6 to "S", 7 to "S")
+                            alarm.daysOfWeek.sorted().joinToString(" ") { weekDaysMap[it] ?: "" }
                         }
-                        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-                            context.startForegroundService(serviceIntent)
-                        } else {
-                            context.startService(serviceIntent)
-                        }
-                        val activityIntent = android.content.Intent(context, com.unbreakable.alarm.AlarmRingingActivity::class.java).apply {
-                            putExtra("ALARM_ID", alarm.id)
-                            putExtra("ALARM_LABEL", alarmLabel)
-                            putExtra("IS_PREVIEW", true)
-                            addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK or android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP or android.content.Intent.FLAG_ACTIVITY_SINGLE_TOP)
-                        }
-                        context.startActivity(activityIntent)
-                    }) {
-                        Icon(
-                            Icons.Filled.PlayArrow,
-                            contentDescription = "Preview Alarm",
-                            tint = MaterialTheme.colorScheme.primary
-                        )
                     }
-                    IconButton(onClick = { 
-                        haptic.performHapticFeedback(HapticFeedbackType.LongPress)
-                        showDeleteConfirm = true 
-                    }) {
-                        Icon(
-                            Icons.Filled.Delete,
-                            contentDescription = "Delete Alarm",
-                            tint = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
-                    }
+                    Text(
+                        text = daysText,
+                        color = MaterialTheme.colorScheme.primary,
+                        fontSize = 14.sp,
+                        fontWeight = FontWeight.SemiBold
+                    )
                 }
             }
         }
@@ -370,22 +395,30 @@ fun AddEditAlarmScreen(viewModel: AlarmViewModel, alarm: Alarm?, onNavigateBack:
     var daysOfWeek by remember { mutableStateOf(alarm?.daysOfWeek ?: emptyList()) }
     var snoozeDuration by remember { mutableStateOf(alarm?.snoozeDuration ?: 5) }
         val currentCalendar = remember { java.util.Calendar.getInstance() }
-    val initialHour = alarm?.hour ?: currentCalendar.get(java.util.Calendar.HOUR_OF_DAY)
-    val initialMinute = alarm?.minute ?: currentCalendar.get(java.util.Calendar.MINUTE)
-    val timePickerState = rememberTimePickerState(
-        initialHour = initialHour,
-        initialMinute = initialMinute,
-        is24Hour = false
-    )
+    var currentHour by remember { mutableStateOf(alarm?.hour ?: currentCalendar.get(java.util.Calendar.HOUR_OF_DAY)) }
+    var currentMinute by remember { mutableStateOf(alarm?.minute ?: currentCalendar.get(java.util.Calendar.MINUTE)) }
+    var currentSelection by remember { mutableStateOf(androidx.compose.material3.ExperimentalMaterial3Api::class.java.let { androidx.compose.material3.TimePickerSelectionMode.Hour }) }
+    var clockKey by remember { mutableStateOf(0) }
+    val timePickerState = androidx.compose.runtime.key(clockKey) {
+        val state = rememberTimePickerState(
+            initialHour = currentHour,
+            initialMinute = currentMinute,
+            is24Hour = false
+        )
+        androidx.compose.runtime.LaunchedEffect(currentSelection) {
+            state.selection = currentSelection
+        }
+        state
+    }
     val haptic = LocalHapticFeedback.current
     Scaffold(
         topBar = {
             TopAppBar(
                 title = { Text(if (alarm == null) "Add Alarm" else "Edit Alarm") },
                 navigationIcon = {
-                    IconButton(onClick = { 
+                    IconButton(onClick = {
                         haptic.performHapticFeedback(HapticFeedbackType.LongPress)
-                        onNavigateBack() 
+                        onNavigateBack()
                     }) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
                     }
@@ -428,7 +461,7 @@ fun AddEditAlarmScreen(viewModel: AlarmViewModel, alarm: Alarm?, onNavigateBack:
                         Box(contentAlignment = Alignment.Center) {
                             if (label.isEmpty()) {
                                 Text(
-                                    text = "Alarm name...",
+                                    text = "Alarm Name...",
                                     color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f),
                                     fontSize = 24.sp,
                                     fontWeight = FontWeight.Bold,
@@ -456,11 +489,128 @@ fun AddEditAlarmScreen(viewModel: AlarmViewModel, alarm: Alarm?, onNavigateBack:
                 textAlign = TextAlign.Center
             )
             Spacer(modifier = Modifier.height(32.dp))
-            UppercaseAmPmTimePicker(
-                state = timePickerState,
-                modifier = Modifier.fillMaxWidth()
-            )
+            Box(
+                modifier = Modifier.fillMaxWidth(),
+                contentAlignment = Alignment.TopCenter
+            ) {
+                UppercaseAmPmTimePicker(
+                    state = timePickerState,
+                    modifier = Modifier.fillMaxWidth()
+                )
+                val focusRequester = remember { androidx.compose.ui.focus.FocusRequester() }
+                val focusManager = androidx.compose.ui.platform.LocalFocusManager.current
+                var activeField by remember { mutableStateOf(0) }
+                var inputText by remember { mutableStateOf("") }
+                Box(modifier = Modifier.size(1.dp).alpha(0f)) {
+                    androidx.compose.foundation.text.BasicTextField(
+                        value = inputText,
+                        onValueChange = { newVal ->
+                            val digits = newVal.filter { it.isDigit() }.take(2)
+                            inputText = digits
+                            if (activeField == 1) {
+                                digits.toIntOrNull()?.let { h ->
+                                    val isAm = timePickerState.hour < 12
+                                    if (timePickerState.is24hour) {
+                                        if (h in 0..23) {
+                                            currentHour = h
+                                            currentMinute = timePickerState.minute
+                                            currentSelection = androidx.compose.material3.TimePickerSelectionMode.Hour
+                                            clockKey++
+                                        }
+                                    } else {
+                                        if (h in 0..12) {
+                                            val targetH = when (h) {
+                                                0, 12 -> if (isAm) 0 else 12
+                                                else -> if (isAm) h else h + 12
+                                            }
+                                            currentHour = targetH
+                                            currentMinute = timePickerState.minute
+                                            currentSelection = androidx.compose.material3.TimePickerSelectionMode.Hour
+                                            clockKey++
+                                        }
+                                    }
+                                }
+                                if (digits.length == 2) {
+                                    activeField = 2
+                                    inputText = ""
+                                    currentSelection = androidx.compose.material3.TimePickerSelectionMode.Minute
+                                    clockKey++
+                                }
+                            } else if (activeField == 2) {
+                                digits.toIntOrNull()?.let { m ->
+                                    if (m in 0..59) {
+                                        currentHour = timePickerState.hour
+                                        currentMinute = m
+                                        currentSelection = androidx.compose.material3.TimePickerSelectionMode.Minute
+                                        clockKey++
+                                    }
+                                }
+                                if (digits.length == 2) {
+                                    focusManager.clearFocus()
+                                    activeField = 0
+                                }
+                            }
+                        },
+                        keyboardOptions = androidx.compose.foundation.text.KeyboardOptions(keyboardType = androidx.compose.ui.text.input.KeyboardType.Number),
+                        modifier = Modifier.focusRequester(focusRequester)
+                    )
+                }
+                Row(
+                    modifier = Modifier
+                        .padding(top = 20.dp)
+                        .width(216.dp)
+                        .height(80.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .width(96.dp)
+                            .fillMaxHeight()
+                            .clickable(
+                                interactionSource = remember { androidx.compose.foundation.interaction.MutableInteractionSource() },
+                                indication = null
+                            ) {
+                                activeField = 1
+                                inputText = ""
+                                timePickerState.selection = TimePickerSelectionMode.Hour
+                                focusRequester.requestFocus()
+                            }
+                    )
+                    Box(
+                        modifier = Modifier
+                            .width(96.dp)
+                            .fillMaxHeight()
+                            .clickable(
+                                interactionSource = remember { androidx.compose.foundation.interaction.MutableInteractionSource() },
+                                indication = null
+                            ) {
+                                activeField = 2
+                                inputText = ""
+                                timePickerState.selection = TimePickerSelectionMode.Minute
+                                focusRequester.requestFocus()
+                            }
+                    )
+                }
+            }
             Spacer(modifier = Modifier.height(32.dp))
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable { 
+                        haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+                        daysOfWeek = if (daysOfWeek.size == 7) emptyList() else listOf(1, 2, 3, 4, 5, 6, 7)
+                    }
+                    .padding(horizontal = 8.dp, vertical = 8.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Checkbox(
+                    checked = daysOfWeek.size == 7,
+                    onCheckedChange = null
+                )
+                Spacer(modifier = Modifier.width(16.dp))
+                Text("Everyday", fontSize = 16.sp, color = MaterialTheme.colorScheme.onSurface)
+            }
+            Spacer(modifier = Modifier.height(12.dp))
             val weekDays = listOf("M", "T", "W", "T", "F", "S", "S")
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
                 weekDays.forEachIndexed { index, day ->
@@ -481,8 +631,10 @@ fun AddEditAlarmScreen(viewModel: AlarmViewModel, alarm: Alarm?, onNavigateBack:
                 }
             }
             Spacer(modifier = Modifier.height(24.dp))
+            MissionsSection(missions = missions, onMissionsChange = { missions = it })
+            Spacer(modifier = Modifier.height(24.dp))
             Column(modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp)) {
-                Text("Snooze limit (minutes)", fontSize = 16.sp, color = MaterialTheme.colorScheme.onSurface)
+                Text("Snooze Limit", fontSize = 16.sp, color = MaterialTheme.colorScheme.onSurface)
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Slider(
                         value = snoozeDuration.toFloat(),
@@ -496,12 +648,10 @@ fun AddEditAlarmScreen(viewModel: AlarmViewModel, alarm: Alarm?, onNavigateBack:
                     Text("${snoozeDuration}m", color = MaterialTheme.colorScheme.primary)
                 }
             }
-            Spacer(modifier = Modifier.height(24.dp))
-            MissionsSection(missions = missions, onMissionsChange = { missions = it })
             if (missions.isNotEmpty()) {
                 Spacer(modifier = Modifier.height(24.dp))
                 Column(modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp)) {
-                    Text("Mute alarm during mission", fontSize = 16.sp, color = MaterialTheme.colorScheme.onSurface)
+                    Text("Mute During Mission", fontSize = 16.sp, color = MaterialTheme.colorScheme.onSurface)
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Slider(
                             value = mutePeriodSecs.toFloat(),
@@ -541,6 +691,7 @@ fun AddEditAlarmScreen(viewModel: AlarmViewModel, alarm: Alarm?, onNavigateBack:
                             minute = timePickerState.minute,
                             label = label,
                             daysOfWeek = daysOfWeek,
+                            isActive = true,
                             vibrate = true,
                             snoozeDuration = snoozeDuration,
                             missions = missions,

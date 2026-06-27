@@ -28,14 +28,14 @@ fun StepMission(targetCount: Int?, onComplete: () -> Unit) {
     var initialSteps by remember { mutableStateOf(-1f) }
     var stepCount by remember { mutableStateOf(0) }
     val target = targetCount ?: 50
-    var permissionGranted by remember { 
+    var permissionGranted by remember {
         mutableStateOf(
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
                 ContextCompat.checkSelfPermission(context, Manifest.permission.ACTIVITY_RECOGNITION) == PackageManager.PERMISSION_GRANTED
             } else {
                 true
             }
-        ) 
+        )
     }
     val launcher = rememberLauncherForActivityResult(
         ActivityResultContracts.RequestPermission()
@@ -98,9 +98,9 @@ fun StepMission(targetCount: Int?, onComplete: () -> Unit) {
         if (!permissionGranted) {
             Text("Physical activity permission required for step tracking", textAlign = TextAlign.Center)
             Spacer(modifier = Modifier.height(16.dp))
-            Button(onClick = { 
+            Button(onClick = {
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
-                    launcher.launch(Manifest.permission.ACTIVITY_RECOGNITION) 
+                    launcher.launch(Manifest.permission.ACTIVITY_RECOGNITION)
                 }
             }) {
                 Text("Grant Permission")

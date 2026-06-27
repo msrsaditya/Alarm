@@ -33,7 +33,6 @@ class AlarmService : Service() {
         const val ACTION_UNMUTE_ALARM = "ACTION_UNMUTE_ALARM"
         const val CHANNEL_ID = "alarm_channel"
         const val NOTIFICATION_ID = 101
-        
         var wakeLock: android.os.PowerManager.WakeLock? = null
     }
     override fun onCreate() {

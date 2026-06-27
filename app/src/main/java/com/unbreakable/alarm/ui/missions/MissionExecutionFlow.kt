@@ -31,7 +31,15 @@ fun MissionExecutionFlow(
     }
     val context = LocalContext.current
     val haptic = LocalHapticFeedback.current
-    val vibrator = remember { context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator }
+    val vibrator = remember {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            val vibratorManager = context.getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as android.os.VibratorManager
+            vibratorManager.defaultVibrator
+        } else {
+            @Suppress("DEPRECATION")
+            context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+        }
+    }
     var currentMissionIndex by remember { mutableStateOf(0) }
     var repetitionsCompleted by remember { mutableStateOf(0) }
     val currentMission = missions[currentMissionIndex]
@@ -52,6 +60,7 @@ fun MissionExecutionFlow(
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     vibrator.vibrate(VibrationEffect.createOneShot(300, VibrationEffect.DEFAULT_AMPLITUDE))
                 } else {
+                    @Suppress("DEPRECATION")
                     vibrator.vibrate(300)
                 }
                 currentMissionIndex++
@@ -60,6 +69,7 @@ fun MissionExecutionFlow(
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     vibrator.vibrate(VibrationEffect.createOneShot(1000, VibrationEffect.DEFAULT_AMPLITUDE))
                 } else {
+                    @Suppress("DEPRECATION")
                     vibrator.vibrate(1000)
                 }
                 onCompleteAll()

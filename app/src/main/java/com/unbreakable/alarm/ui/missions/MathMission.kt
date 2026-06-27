@@ -59,7 +59,7 @@ fun MathMission(difficulty: Difficulty?, onComplete: () -> Unit) {
         }
         OutlinedTextField(
             value = userInput,
-            onValueChange = { input -> 
+            onValueChange = { input ->
                 val cleanInput = input.trim()
                 if (cleanInput.length <= problem.second.toString().length + 1) {
                     userInput = cleanInput

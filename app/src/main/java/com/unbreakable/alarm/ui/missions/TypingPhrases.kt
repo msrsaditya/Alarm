@@ -115,17 +115,14 @@ object PhraseManager {
     private const val PREFS_NAME = "TypingPhrases"
     private const val KEY_PHRASES = "phrases"
     private const val KEY_INDEX = "current_index"
-
     fun getSavedPhrases(context: android.content.Context): List<String> {
         val prefs = context.getSharedPreferences(PREFS_NAME, android.content.Context.MODE_PRIVATE)
         return prefs.getStringSet(KEY_PHRASES, emptySet())?.toList() ?: emptyList()
     }
-
     fun savePhrases(context: android.content.Context, phrases: Set<String>) {
         val prefs = context.getSharedPreferences(PREFS_NAME, android.content.Context.MODE_PRIVATE)
         prefs.edit().putStringSet(KEY_PHRASES, phrases).apply()
     }
-
     fun getAndAdvanceNextPhrase(context: android.content.Context): String? {
         val prefs = context.getSharedPreferences(PREFS_NAME, android.content.Context.MODE_PRIVATE)
         val savedPhrases = prefs.getStringSet(KEY_PHRASES, emptySet())?.toList() ?: emptyList()
@@ -143,7 +140,6 @@ object PhraseManager {
         return null
     }
 }
-
 val SUPER_HARD_PHRASES = listOf(
     "In three words I can sum up everything I've learned about life: it goes on.", "To be yourself in a world that is constantly trying to make you something else is the greatest accomplishment.",
     "You know you're in love when you can't fall asleep because reality is finally better than your dreams.", "The paradox of education is precisely this - that as one begins to become conscious one begins to examine the society in which he is being educated.",

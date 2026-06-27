@@ -26,7 +26,6 @@ class AlarmReceiver : BroadcastReceiver() {
         } catch (e: Exception) {
             Log.e("AlarmReceiver", "Failed to start foreground service", e)
         }
-
         try {
             val activityIntent = Intent(context, AlarmRingingActivity::class.java).apply {
                 putExtra("ALARM_ID", alarmId)
